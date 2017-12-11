@@ -1,7 +1,6 @@
 ---
 # tasks file for app---
-- become: true
-  block:
+- block:
   - name: install tomcat
     package:
       name: tomcat
@@ -33,10 +32,7 @@
       name: tomcat
       state: started
 
-- name: Set up static index HTML file
-  become: true
-  block:
-  - name: copy static index.html to tomcat webapps/ansible/index.html
-    template:
-      src: index.html.j2
-      dest: /usr/share/tomcat/webapps/ansible/index.html
+- name: copy static index.html to tomcat webapps/ansible/index.html
+  template:
+    src: index.html.j2
+    dest: /usr/share/tomcat/webapps/ansible/index.html

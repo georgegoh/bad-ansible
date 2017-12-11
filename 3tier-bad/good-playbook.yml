@@ -1,8 +1,7 @@
 ---
 - name: set up yum repo
   hosts: all
-  gather_facts: false # remove later! speeds up testing
-  become: true
+  become: yes
   tasks:
   - template:
       src: ./open_three-tier-app.repo
@@ -10,8 +9,16 @@
       mode: 0644
 
 - hosts: frontends
+  become: yes
   roles:
-    - frontend
+    - role: frontend
+
 - hosts: apps
+  become: yes
   roles:
-    - app
+    - role: app
+
+- hosts: appdbs
+  become: yes
+  roles:
+    - role: geerlingguy.postgresql
