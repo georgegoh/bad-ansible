@@ -1,7 +1,4 @@
-[all:vars]
-GUID=c16d
-
-[internal:vars]
+[3tierapp:vars]
 
 ###########################################################################
 ### Ansible Vars
@@ -9,22 +6,28 @@ GUID=c16d
 timeout=60
 ansible_become=yes
 ansible_ssh_user=ec2-user
-
-[internal:children]
+ansible_ssh_private_key_file="~/workspace/RedHat/Training/ansible_bootcamp/175bkey.pem"
+ansible_ssh_common_args="-o StrictHostKeyChecking=no"
+[3tierapp:children]
 frontends
 apps
 appdbs
+support
+
 
 [frontends]
 ## These are the frontends
-frontend1 ansible_host=frontend1."{{ GUID }}".internal
+frontend1.175b.internal ansible_ssh_host=frontend1.175b.example.opentlc.com
 
 [apps]
 ## These are the apps
-app1 ansible_host=app1."{{ GUID }}".internal
-app2 ansible_host=app2."{{ GUID }}".internal
+app1.175b.internal ansible_ssh_host=app1.175b.example.opentlc.com
+app2.175b.internal ansible_ssh_host=app2.175b.example.opentlc.com
 
 [appdbs]
-## These are the appdbi(s)
-appdb1 ansible_host=appdb1."{{ GUID }}".internal
+## These are the appdbs
+appdb1.175b.internal ansible_ssh_host=appdb1.175b.example.opentlc.com
 
+## These are the support
+[support]
+support1.175b.internal ansible_ssh_host=support1.175b.example.opentlc.com
